@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { FC } from "react";
 import styled from "styled-components";
 
 import Accordion from "./components/Accordion";
 import { AccordionData } from "./types/types";
 import data from "./constants/DataOfAccordion";
+
+export const SearchContext = createContext("");
 
 const App: FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,20 +41,22 @@ const App: FC = () => {
   };
 
   return (
-    <MainContainer>
-      <Content>
-        <h1 style={{ textAlign: "center", fontSize: "30px" }}>
-          Accordion of cars
-        </h1>
-        <SearchInput
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-        <Accordion data={data} openIds={openIds} searchTerm={searchTerm} />
-      </Content>
-    </MainContainer>
+    <SearchContext.Provider value={searchTerm}>
+      <MainContainer>
+        <Content>
+          <h1 style={{ textAlign: "center", fontSize: "30px" }}>
+            Accordion of cars
+          </h1>
+          <SearchInput
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+          <Accordion data={data} openIds={openIds} />
+        </Content>
+      </MainContainer>
+    </SearchContext.Provider>
   );
 };
 
@@ -69,7 +73,6 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-
   border: 1px solid gray;
   border-radius: 10px;
   width: 500px;

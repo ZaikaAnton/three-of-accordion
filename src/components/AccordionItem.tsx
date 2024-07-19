@@ -1,6 +1,5 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
 
 import { AccordionData } from "../types/types";
 import Highlight from "./Highlight";
@@ -8,14 +7,9 @@ import Highlight from "./Highlight";
 interface AccordionItemProps {
   item: AccordionData;
   openIds: number[];
-  searchTerm: string;
 }
 
-const AccordionItem: FC<AccordionItemProps> = ({
-  item,
-  openIds,
-  searchTerm,
-}) => {
+const AccordionItem: FC<AccordionItemProps> = ({ item, openIds }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {
@@ -36,18 +30,12 @@ const AccordionItem: FC<AccordionItemProps> = ({
           </IconWrapper>
         )}
         <TitleText>
-          <Highlight text={item.title} highlight={searchTerm} />
+          <Highlight text={item.title} />
         </TitleText>
       </TitleButton>
-
       <ContentWrapper data-isopen={isOpen}>
         {item.children.map((child) => (
-          <AccordionItem
-            key={child.id}
-            item={child}
-            openIds={openIds}
-            searchTerm={searchTerm}
-          />
+          <AccordionItem key={child.id} item={child} openIds={openIds} />
         ))}
       </ContentWrapper>
     </AccordionWrapper>

@@ -1,22 +1,24 @@
-import { FC } from "react";
-
+import { FC, useContext } from "react";
 import styled from "styled-components";
+
+import { SearchContext } from "../App";
 
 interface HighlightProps {
   text: string;
-  highlight: string;
 }
 
-const Highlight: FC<HighlightProps> = ({ text, highlight }) => {
-  if (!highlight.trim()) {
+const Highlight: FC<HighlightProps> = ({ text }) => {
+  const searchTerm = useContext(SearchContext);
+
+  if (!searchTerm.trim()) {
     return <span>{text}</span>;
   }
 
-  const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+  const parts = text.split(new RegExp(`(${searchTerm})`, "gi"));
   return (
     <span>
       {parts.map((part, index) =>
-        part.toLowerCase() === highlight.toLowerCase() ? (
+        part.toLowerCase() === searchTerm.toLowerCase() ? (
           <HighlightedText key={index}>{part}</HighlightedText>
         ) : (
           part

@@ -7,19 +7,13 @@ import AccordionItem from "./AccordionItem";
 interface AccordionProps {
   data: AccordionData[];
   openIds: number[];
-  searchTerm: string;
 }
 
-const Accordion: FC<AccordionProps> = ({ data, openIds, searchTerm }) => {
+const Accordion: FC<AccordionProps> = ({ data, openIds }) => {
   return (
     <AccordionWrapper>
       {data.map((item) => (
-        <AccordionItem
-          key={item.id}
-          item={item}
-          openIds={openIds}
-          searchTerm={searchTerm}
-        />
+        <AccordionItem key={item.id} item={item} openIds={openIds} />
       ))}
     </AccordionWrapper>
   );
