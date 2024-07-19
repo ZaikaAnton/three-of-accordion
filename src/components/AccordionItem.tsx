@@ -3,13 +3,19 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { AccordionData } from "../types/types";
+import Highlight from "./Highlight";
 
 interface AccordionItemProps {
   item: AccordionData;
   openIds: number[];
+  searchTerm: string;
 }
 
-const AccordionItem: FC<AccordionItemProps> = ({ item, openIds }) => {
+const AccordionItem: FC<AccordionItemProps> = ({
+  item,
+  openIds,
+  searchTerm,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {
@@ -29,12 +35,19 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, openIds }) => {
             <Icon data-isopen={!isOpen}>+</Icon>
           </IconWrapper>
         )}
-        <TitleText>{item.title}</TitleText>
+        <TitleText>
+          <Highlight text={item.title} highlight={searchTerm} />
+        </TitleText>
       </TitleButton>
 
       <ContentWrapper data-isopen={isOpen}>
         {item.children.map((child) => (
-          <AccordionItem key={child.id} item={child} openIds={openIds} />
+          <AccordionItem
+            key={child.id}
+            item={child}
+            openIds={openIds}
+            searchTerm={searchTerm}
+          />
         ))}
       </ContentWrapper>
     </AccordionWrapper>

@@ -7,27 +7,20 @@ import { AccordionData } from "./types/types";
 import data from "./constants/DataOfAccordion";
 
 const App: FC = () => {
-  // Стейт для термина в поисковике
   const [searchTerm, setSearchTerm] = useState("");
   const [openIds, setOpenIds] = useState<number[]>([]);
 
-  // Функция на событие onChange.
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // Когда мы что-то вводим в интуп, то значения с инпута мы записываем в стейт searchTerm
     const term = event.target.value.toLowerCase();
     setSearchTerm(term);
     if (term) {
-      // Получает массив с id, который соответствуют значению term
       const openIds = collectOpenIds(data, term);
-      // Записывает массив в стейт openIds
       setOpenIds(openIds);
     } else {
-      // или пустой массив
       setOpenIds([]);
     }
   };
 
-  // Функция для поиска id по значению с инпута
   const collectOpenIds = (items: AccordionData[], term: string): number[] => {
     let ids: number[] = [];
     for (const item of items) {
@@ -57,7 +50,7 @@ const App: FC = () => {
           value={searchTerm}
           onChange={handleSearch}
         />
-        <Accordion data={data} openIds={openIds} />
+        <Accordion data={data} openIds={openIds} searchTerm={searchTerm} />
       </Content>
     </MainContainer>
   );

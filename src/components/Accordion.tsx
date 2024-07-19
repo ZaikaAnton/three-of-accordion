@@ -7,13 +7,19 @@ import AccordionItem from "./AccordionItem";
 interface AccordionProps {
   data: AccordionData[];
   openIds: number[];
+  searchTerm: string;
 }
 
-const Accordion: FC<AccordionProps> = ({ data, openIds }) => {
+const Accordion: FC<AccordionProps> = ({ data, openIds, searchTerm }) => {
   return (
     <AccordionWrapper>
       {data.map((item) => (
-        <AccordionItem key={item.id} item={item} openIds={openIds} />
+        <AccordionItem
+          key={item.id}
+          item={item}
+          openIds={openIds}
+          searchTerm={searchTerm}
+        />
       ))}
     </AccordionWrapper>
   );
@@ -30,7 +36,7 @@ const AccordionWrapper = styled.div`
   overflow-y: auto;
 
   &::-webkit-scrollbar {
-    width: 8px;
+    width: 5px;
   }
 
   &::-webkit-scrollbar-thumb {
